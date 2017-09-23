@@ -2,9 +2,13 @@
 NodeBlues is a node server meant for rapid prototyping. It was named after the Japanese name "Blues" for *Proto*man from the Megaman video game series. It is very light weight and easy to use.
 
 ---
+
+
 # Installation
 TODO
 ---
+
+
 # Run Example Code or Tests
 ```
 $ npm install # Must be run before running tests
@@ -12,6 +16,7 @@ $ npm test    # Runs all tests
 $ npm start   # Runs example server
 
 ```
+
 
 # Example Code
 ```
@@ -61,4 +66,28 @@ server.start(host, port).then(() => {
     console.log(`Running on http://${host}:${port}`); // eslint-disable-line no-console    
 });
 
+```
+
+
+## requestData
+This object is passed into the route callbacks and contains the body, pathParams, and queryParams from
+the request.
+
+```
+requestData.body         // Object/String containing the body from the request
+requestData.pathParams   // Object containing all path parameters
+requestData.queryParams  // Object containing the query params
+```
+
+
+## respondWith
+This function is passed into the route callbacks and is used to fire off a response. You can pass in a statusCode,
+responseData, and/or a contentType header to use.
+
+```
+let respondWith = function respondWith (statusCode = 200, responseData = '', contentType = 'text/json') {
+    res.statusCode = statusCode;
+    res.setHeader('Content-Type', contentType);
+    res.end(JSON.stringify(responseData));
+};
 ```
