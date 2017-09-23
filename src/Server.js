@@ -26,11 +26,17 @@ class Server {
             console.log(queryParams);
             console.log(method, pathname);
         
-            let body = [];
+            let body = '';
         
-            req.on('data', body.push).on('end', () => {
-                body = Buffer.concat(body).toString(); 
-        
+            req.on('data', (data) => {
+                body += data;
+            }).on('end', () => {
+                try {
+                    body = JSON.parse(body); 
+                } catch (error) {
+                    body = {};
+                }
+
                 let requestData = {
                     body,
                     query: queryParams
