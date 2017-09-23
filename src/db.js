@@ -1,5 +1,4 @@
 const fs = require('fs');
-
 const DATA_FILE = 'db.json';
 
 class db {
