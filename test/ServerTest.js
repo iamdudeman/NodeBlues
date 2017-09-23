@@ -3,13 +3,10 @@ const request = require('request');
 const Router = require('../src/Router');
 const Server = require('../src/Server');
 
-// TODO test query string data
-// TODO test post body data
 // TODO test url path vars
 // TODO test changing the Content-Type header
-// TODO test unknown route
 
-describe.only('Server', () => {
+describe('Server', () => {
     const baseUrl = 'http://localhost:1337';
 
     let router = null;
@@ -28,6 +25,34 @@ describe.only('Server', () => {
     it('should 404 for undefined route', done => {
         request.get(`${baseUrl}/unkown`, (err, response) => {
             assert.equal(response.statusCode, 404);
+            done();
+        });
+    });
+
+    it('should have query string data', done => {
+        router.get('/queryParams', (requestData, respondWith) => {
+            let  { queryParams } = requestData;
+
+            respondWith(200, queryParams.test);
+        });
+
+        request.get(`${baseUrl}/queryParams?test=data`, (err, response) => {
+            assert.equal(response.statusCode, 200);
+            assert.equal(response.body, '"data"');
+            done();
+        });
+    });
+
+    it('should have request body data', done => {
+        router.post('/postData', (requestData, respondWith) => {
+            let  { body } = requestData;
+
+            respondWith(200, body.test);
+        });
+
+        request.post({url: `${baseUrl}/postData`, json: {test: 'data'}}, (err, response) => {
+            assert.equal(response.statusCode, 200);
+            assert.equal(response.body, 'data');
             done();
         });
     });

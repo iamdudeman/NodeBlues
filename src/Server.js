@@ -1,6 +1,9 @@
 const http =  require('http');
 const url = require('url');
 
+// TODO handle path params
+
+
 /**
  * Server handles listening to a host and port, passing request data to Router routes, and
  * passing a respondWith method to registered routes.
@@ -48,8 +51,6 @@ class Server {
                 let pathname = urlParts.pathname;
                 let method = req.method;
             
-                // TODO path params
-                
                 let body = '';
             
                 req.on('data', (data) => {
@@ -63,7 +64,7 @@ class Server {
     
                     let requestData = {
                         body,
-                        query: queryParams
+                        queryParams
                     };
     
                     // TODO logic if router path not found
