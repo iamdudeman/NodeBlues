@@ -23,11 +23,18 @@ router.post('/test', (requestData, respondWith) => {
     let value = requestData.body.test;
 
     database.set('test', value);
+
+    // NOTE: Only needed if you want ot persist data
     database.save();
 
     respondWith(200);
 });
 
+router.get('/test/:id', (requestData, respondWith) => {
+    let value = requestData.pathParams.id;
+
+    respondWith(200, value);
+});
 
 
 // Create our server and start it
