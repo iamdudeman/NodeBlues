@@ -35,4 +35,6 @@ const host = 'localhost';
 const port = 1337;
 let server = new Server(router);
 
-server.start(host, port);
+server.start(host, port).then(() => {
+    console.log(`Running on http://${host}:${port}`); // eslint-disable-line no-console    
+});

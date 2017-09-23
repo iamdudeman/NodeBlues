@@ -4,7 +4,6 @@ const Router = require('../src/Router');
 const Server = require('../src/Server');
 
 // TODO test url path vars
-// TODO test changing the Content-Type header
 
 describe('Server', () => {
     const baseUrl = 'http://localhost:1337';
@@ -53,6 +52,18 @@ describe('Server', () => {
         request.post({url: `${baseUrl}/postData`, json: {test: 'data'}}, (err, response) => {
             assert.equal(response.statusCode, 200);
             assert.equal(response.body, 'data');
+            done();
+        });
+    });
+
+    it('should be able to change content-type', done => {
+        router.get('/contentTypePlain', (requestData, respondWith) => {
+            respondWith(200, 'text', 'text/plain');
+        });
+
+        request.get({url: `${baseUrl}/contentTypePlain`, json: {test: 'data'}}, (err, response) => {
+            assert.equal(response.statusCode, 200);
+            assert.equal(response.headers['content-type'], 'text/plain');
             done();
         });
     });

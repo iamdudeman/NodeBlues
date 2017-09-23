@@ -25,7 +25,6 @@ class Server {
     stop() {
         return new Promise((resolve) => {
             this.server.close().on('close', () => {
-                console.log('Stopped server'); // eslint-disable-line no-console
                 resolve();
             });
         });
@@ -67,20 +66,17 @@ class Server {
                         queryParams
                     };
     
-                    // TODO logic if router path not found
                     let routeCallback = this.router.route(method, pathname);
 
                     routeCallback ? routeCallback(requestData, respondWith) : respondWith(404, 'Route not found');
                 }).on('error', err => {
-                    // TODO handle error better
-                  console.error(err.stack);  
+                    console.error(err.stack); // eslint-disable-line no-console
                 });
             
             });
             
             
             this.server.listen(port, host, () => {
-                console.log(`Running on http://${host}:${port}`); // eslint-disable-line no-console
                 resolve();            
             });
     
