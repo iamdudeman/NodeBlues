@@ -18,6 +18,8 @@ class Server {
 
     /**
      * Stops the server.
+     * 
+     * @returns {Promise} A promise that resolves when the server has stopped
      */
     stop() {
         return new Promise((resolve) => {
@@ -32,6 +34,7 @@ class Server {
      * 
      * @param {string} host - The host
      * @param {number} port - The port
+     * @returns {Promise} A promise that resolves when the server has started
      */
     start(host = 'localhost', port = 1337) {
         return new Promise((resolve) => {
