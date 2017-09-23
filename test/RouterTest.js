@@ -8,15 +8,39 @@ describe('Router', () => {
         router = new Router();
     });
 
-    it('should be able to route a registered route', () => {
-        let cb = () => {};
+    describe('routing', () => {
+        it('should be able to route a registered route', () => {
+            let cb = () => {};
+    
+            router.routes.get['/test'] = cb;
+            
+            let routeCallback = router.route('GET', '/test');
+    
+            assert.equal(routeCallback, cb);
+        });
 
-        router.routes.get['/test'] = cb;
-        
-        let routeCallback = router.route('GET', '/test');
+        it('should be able to route with url params', () => {
+            let cb = () => {};
 
-        assert.equal(routeCallback, cb);
+            router.routes.get['/test/:id/rawr/:mytest'] = cb;
+
+            let routeCallback = router.route('GET', '/test/12/rawr/heya');
+
+            assert.equal(routeCallback, cb);
+        });
+
+        it('should not route if incorrect path', () => {
+            let cb = () => {};
+
+            router.routes.get['/test/:id/rawr/:mytest'] = cb;
+
+            let routeCallback = router.route('GET', '/test/12/wrong/heya');
+
+            assert.equal(routeCallback, undefined);
+        });
     });
+
+    
 
     it('should be able to register get routes', () => {
         assertRoute('get', '/test', () => {});

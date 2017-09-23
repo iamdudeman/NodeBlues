@@ -47,6 +47,7 @@ class Server {
     
                 let urlParts = url.parse(req.url, true);
                 let queryParams = urlParts.query;    
+                let pathParams = {};
                 let pathname = urlParts.pathname;
                 let method = req.method;
             
@@ -63,6 +64,7 @@ class Server {
     
                     let requestData = {
                         body,
+                        pathParams,
                         queryParams
                     };
     

@@ -22,7 +22,18 @@ class Router {
      * @return {function} The function registered for the desired route
      */
     route(method, path) {
-        return this.routes[method.toLowerCase()][path];
+        let methodRoutes = this.routes[method.toLowerCase()];
+
+        const PATH_PARAM_PATTERN=/\/:[a-zA-Z0-9]+/g;
+        const REPLACE_PATTERN='/[a-zA-Z0-9]*';
+
+        let methodPath = Object.keys(methodRoutes).filter(routePath => {
+            let routePathWithPattern = new RegExp(routePath.replace(PATH_PARAM_PATTERN, REPLACE_PATTERN));
+
+            return routePathWithPattern.test(path);
+        })[0];
+
+        return methodRoutes[methodPath];
     }
 
     /**

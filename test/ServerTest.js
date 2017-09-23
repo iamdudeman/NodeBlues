@@ -3,8 +3,6 @@ const request = require('request');
 const Router = require('../src/Router');
 const Server = require('../src/Server');
 
-// TODO test url path vars
-
 describe('Server', () => {
     const baseUrl = 'http://localhost:1337';
 
@@ -54,6 +52,21 @@ describe('Server', () => {
             assert.equal(response.body, 'data');
             done();
         });
+    });
+
+    it('should be able to have path params', done => {
+        router.get('/pathParams/:id/test', (requestData, respondWith) => {
+            let {pathParams} = requestData;
+
+            respondWith(200, pathParams.id);
+        });
+
+        request.get({url: `${baseUrl}/pathParams/2/test`, json: {test: 'data'}}, (err, response) => {
+            assert.equal(response.statusCode, 200);
+            assert.equal(response.body, 2);
+            done();
+        });
+
     });
 
     it('should be able to change content-type', done => {
