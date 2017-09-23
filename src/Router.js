@@ -1,3 +1,6 @@
+const PATH_PARAM_KEY_PATTERN=/\/:([a-zA-Z0-9]+)/g;
+const PATH_PARAM_VALUE_PATTERN='/([a-zA-Z0-9]*)';
+
 /**
  * Router contains all route definitions for the Server to use.
  */
@@ -18,22 +21,42 @@ class Router {
      * Returns the callback for the route defined by the method and path.
      * 
      * @param {string} method - The http method used (GET, POST, etc)
-     * @param {string} path - The path for the route
+     * @param {string} path - The path being called
      * @return {function} The function registered for the desired route
      */
     route(method, path) {
         let methodRoutes = this.routes[method.toLowerCase()];
-
-        const PATH_PARAM_PATTERN=/\/:[a-zA-Z0-9]+/g;
-        const REPLACE_PATTERN='/[a-zA-Z0-9]*';
-
+        let pathParams = {};
         let methodPath = Object.keys(methodRoutes).filter(routePath => {
-            let routePathWithPattern = new RegExp(routePath.replace(PATH_PARAM_PATTERN, REPLACE_PATTERN));
+            let pathParamValuesRegEx = new RegExp('^' + routePath.replace(PATH_PARAM_KEY_PATTERN, PATH_PARAM_VALUE_PATTERN) + '$');
+            let doesMatch = pathParamValuesRegEx.test(path);
+            
+            if (doesMatch) {
+                let pathParamKeys = [];
+                let match;
+                while (match = PATH_PARAM_KEY_PATTERN.exec(routePath)) { // eslint-disable-line no-cond-assign
+                    pathParamKeys.push(match[1]);
+                }
 
-            return routePathWithPattern.test(path);
+                // I'm not sure why the values regex doesn't need the loop but the keys do
+                let pathParamValues = pathParamValuesRegEx.exec(path);
+
+                if (pathParamKeys) {
+                    for (let i = 0; i < pathParamKeys.length; i++) {
+                        pathParams[pathParamKeys[i]] = pathParamValues[i + 1];
+                    }
+                }
+
+                return true;
+            }
+
+            return false;
         })[0];
 
-        return methodRoutes[methodPath];
+        return {
+            callback: methodRoutes[methodPath],
+            pathParams
+        };
     }
 
     /**

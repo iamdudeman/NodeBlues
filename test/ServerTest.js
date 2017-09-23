@@ -61,12 +61,25 @@ describe('Server', () => {
             respondWith(200, pathParams.id);
         });
 
-        request.get({url: `${baseUrl}/pathParams/2/test`, json: {test: 'data'}}, (err, response) => {
+        request.get(`${baseUrl}/pathParams/2/test`, (err, response) => {
             assert.equal(response.statusCode, 200);
-            assert.equal(response.body, 2);
+            assert.equal(response.body, '"2"');
             done();
         });
+    });
 
+    it('should be able to have multiple path params', done => {
+        router.get('/pathParams/:id/test/:another', (requestData, respondWith) => {
+            let {pathParams} = requestData;
+
+            respondWith(200, pathParams.id + pathParams.another);
+        });
+
+        request.get(`${baseUrl}/pathParams/2/test/something`, (err, response) => {
+            assert.equal(response.statusCode, 200);
+            assert.equal(response.body, '"2something"');
+            done();
+        });
     });
 
     it('should be able to change content-type', done => {

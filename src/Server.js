@@ -1,9 +1,6 @@
 const http =  require('http');
 const url = require('url');
 
-// TODO handle path params
-
-
 /**
  * Server handles listening to a host and port, passing request data to Router routes, and
  * passing a respondWith method to registered routes.
@@ -47,7 +44,6 @@ class Server {
     
                 let urlParts = url.parse(req.url, true);
                 let queryParams = urlParts.query;    
-                let pathParams = {};
                 let pathname = urlParts.pathname;
                 let method = req.method;
             
@@ -62,14 +58,14 @@ class Server {
                         body = {};
                     }
     
+                    let route = this.router.route(method, pathname);
+                    let routeCallback = route.callback;
                     let requestData = {
                         body,
-                        pathParams,
+                        pathParams: route.pathParams,
                         queryParams
                     };
     
-                    let routeCallback = this.router.route(method, pathname);
-
                     routeCallback ? routeCallback(requestData, respondWith) : respondWith(404, 'Route not found');
                 }).on('error', err => {
                     console.error(err.stack); // eslint-disable-line no-console

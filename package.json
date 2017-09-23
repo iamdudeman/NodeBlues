@@ -4,7 +4,7 @@
   "description": "An easy to use node server meant for rapid prototyping ",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node src/example.js",
     "test": "mocha"
   },
   "repository": {

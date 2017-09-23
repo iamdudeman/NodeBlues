@@ -14,7 +14,7 @@ describe('Router', () => {
     
             router.routes.get['/test'] = cb;
             
-            let routeCallback = router.route('GET', '/test');
+            let routeCallback = router.route('GET', '/test').callback;
     
             assert.equal(routeCallback, cb);
         });
@@ -24,7 +24,7 @@ describe('Router', () => {
 
             router.routes.get['/test/:id/rawr/:mytest'] = cb;
 
-            let routeCallback = router.route('GET', '/test/12/rawr/heya');
+            let routeCallback = router.route('GET', '/test/12/rawr/heya').callback;
 
             assert.equal(routeCallback, cb);
         });
@@ -34,9 +34,20 @@ describe('Router', () => {
 
             router.routes.get['/test/:id/rawr/:mytest'] = cb;
 
-            let routeCallback = router.route('GET', '/test/12/wrong/heya');
+            let routeCallback = router.route('GET', '/test/12/wrong/heya').callback;
 
             assert.equal(routeCallback, undefined);
+        });
+
+        it('should return pathParams if there are any', () => {
+            let cb = () => {};
+
+            router.routes.get['/test/:id/rawr/:mytest'] = cb;
+
+            let pathParams = router.route('GET', '/test/12/rawr/heya').pathParams;
+
+            assert.equal(pathParams.id, 12);
+            assert.equal(pathParams.mytest, 'heya');            
         });
     });
 
