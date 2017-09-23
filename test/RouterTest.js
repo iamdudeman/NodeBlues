@@ -8,19 +8,29 @@ describe('Router', () => {
         router = new Router();
     });
 
-    it('should route get', () => {
+    it('should be able to route a registered route', () => {
+        let cb = () => {};
+
+        router.routes.get['/test'] = cb;
+        
+        let routeCallback = router.route('GET', '/test');
+
+        assert.equal(routeCallback, cb);
+    });
+
+    it('should be able to register get routes', () => {
         assertRoute('get', '/test', () => {});
     });
 
-    it('should route post', () => {
+    it('should be able to register post routes', () => {
         assertRoute('post', '/test', () => {});
     });
 
-    it('should route put', () => {
+    it('should be able to register put routes', () => {
         assertRoute('put', '/test', () => {});
     });
 
-    it('should route delete', () => {
+    it('should be able to register delete routes', () => {
         assertRoute('delete', '/test', () => {});
     });
 
@@ -31,4 +41,3 @@ describe('Router', () => {
         assert.equal(router.routes[method][route], cb);
     }
 });
-

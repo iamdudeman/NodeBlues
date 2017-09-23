@@ -1,16 +1,30 @@
 const http =  require('http');
 const url = require('url');
 
-
+/**
+ * Server handles listening to a host and port, passing request data to Router routes, and
+ * passing a respondWith method to registered routes.
+ */
 class Server {
+    /**
+     * Create a Server instance.
+     * 
+     * @param {Router} router - The Router to be used for this Server
+     */
     constructor(router) {
         this.router = router;
     }
 
-    start(host, port) {
+    /**
+     * Start this Server for a host on a port.
+     * 
+     * @param {string} host - The host
+     * @param {number} port - The port
+     */
+    start(host = 'localhost', port = 1337) {
 
         const server = http.createServer((req, res) => {
-            let respondWith = (statusCode, responseData = '', contentType = 'text/json') => {
+            let respondWith = function respondWith (statusCode = 200, responseData = '', contentType = 'text/json') {
                 res.statusCode = statusCode;
                 res.setHeader('Content-Type', contentType);
                 res.end(JSON.stringify(responseData));
@@ -46,17 +60,11 @@ class Server {
                 let routeCallback = this.router.route(method, pathname);
                 
                 routeCallback(requestData, respondWith);
-
-
-                // res.statusCode = 200;
-                // res.setHeader('Content-Type', 'text/json');
-                // res.end(JSON.stringify({woot: 'test', body}));
-            
+ 
             }).on('error', err => {
+                // TODO handle error better
               console.error(err.stack);  
             });
-        
-        
         
         });
         
