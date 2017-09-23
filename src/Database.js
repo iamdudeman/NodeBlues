@@ -1,7 +1,10 @@
 const fs = require('fs');
 const DATA_FILE = 'db.json';
 
-class db {
+/**
+ * Database is a simple persistence utility that saves stored data to a json file.
+ */
+class Database {
     /**
      * The file the data is stored to.
      */
@@ -49,4 +52,4 @@ class db {
     }
 }
 
-module.exports = db;
+module.exports = Database;

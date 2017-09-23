@@ -1,42 +1,28 @@
-const http =  require('http');
-const url = require('url');
+const Database = require('./Database');
+const Router = require('./Router');
+const Server = require('./Server');
 
-const hostname = 'localhost';
+const host = 'localhost';
 const port = 1337;
-const server = http.createServer((req, res) => {
-    let urlParts = url.parse(req.url, true);
-    let queryParams = urlParts.query;
-    let pathname = urlParts.pathname;
 
-    console.log(urlParts);
-    console.log(queryParams);
+let database = new Database();
+let router = new Router();
 
+router.get('/test', (requestData, respondWith) => {
+    let data = database.get('test');
 
-    let body = [];
-
-    req.on('data', chunk => {
-        body.push(chunk);
-    }).on('end', () => {
-        body = Buffer.concat(body).toString(); 
-
-        let requestData = {
-            body,
-            query: queryParams
-        };
-
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/json');
-        res.end(JSON.stringify({woot: 'test', body}));
-    
-    }).on('error', err => {
-      console.error(err.stack);  
-    });
-
-
-
+    respondWith(200, {data});
 });
 
+router.post('/test', (requestData, respondWith) => {
+    let value = requestData.body.test;
 
-server.listen(port, hostname, () => {
-    console.log(`Running on http://${hostname}:${port}`);
+    database.set('test', value);
+    database.save();
+
+    respondWith(200);
 });
+
+let server = new Server(router);
+
+server.start(host, port);

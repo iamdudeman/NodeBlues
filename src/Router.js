@@ -1,4 +1,10 @@
+/**
+ * Router contains all route definitions for the Server to use.
+ */
 class Router {
+    /**
+     * Create a Router instance.
+     */
     constructor() {
         this.routes = {
             get: {},
@@ -6,6 +12,10 @@ class Router {
             put: {},
             delete: {}
         };
+    }
+
+    route(method, path) {
+        return this.routes[method.toLowerCase()][path];
     }
 
     get(path, callback) {
