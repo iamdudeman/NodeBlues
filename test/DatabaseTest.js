@@ -27,7 +27,11 @@ describe('Database', () => {
 
     describe('saves and reads from file system', () => {
         afterEach(() => {
-            fs.unlinkSync(Database.DATA_FILE);
+            try {
+                fs.unlinkSync(Database.DATA_FILE);
+            } catch (err) {
+                // Nothing to do here
+            }
         });
         
         it('should save', () => {
@@ -46,6 +50,10 @@ describe('Database', () => {
             db.load();
 
             assert.equal(db.data.key, 'value');
+        });
+
+        it('should not fail loading if file does not exist', () => {
+            db.load();
         });
     });
 });

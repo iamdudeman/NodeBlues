@@ -13,6 +13,19 @@ class Server {
      */
     constructor(router) {
         this.router = router;
+        this.server = null;
+    }
+
+    /**
+     * Stops the server.
+     */
+    stop() {
+        return new Promise((resolve) => {
+            this.server.close().on('close', () => {
+                console.log('Stopped server'); // eslint-disable-line no-console
+                resolve();
+            });
+        });
     }
 
     /**
@@ -22,57 +35,55 @@ class Server {
      * @param {number} port - The port
      */
     start(host = 'localhost', port = 1337) {
-
-        const server = http.createServer((req, res) => {
-            let respondWith = function respondWith (statusCode = 200, responseData = '', contentType = 'text/json') {
-                res.statusCode = statusCode;
-                res.setHeader('Content-Type', contentType);
-                res.end(JSON.stringify(responseData));
-            };
-
-            let urlParts = url.parse(req.url, true);
-            let queryParams = urlParts.query;    
-            let pathname = urlParts.pathname;
-            let method = req.method;
-        
-            // TODO path params
-
-            console.log(queryParams);
-            console.log(method, pathname);
-        
-            let body = '';
-        
-            req.on('data', (data) => {
-                body += data;
-            }).on('end', () => {
-                try {
-                    body = JSON.parse(body); 
-                } catch (error) {
-                    body = {};
-                }
-
-                let requestData = {
-                    body,
-                    query: queryParams
+        return new Promise((resolve) => {
+            this.server = http.createServer((req, res) => {
+                let respondWith = function respondWith (statusCode = 200, responseData = '', contentType = 'text/json') {
+                    res.statusCode = statusCode;
+                    res.setHeader('Content-Type', contentType);
+                    res.end(JSON.stringify(responseData));
                 };
-
-                // TODO logic if router path not found
-                let routeCallback = this.router.route(method, pathname);
+    
+                let urlParts = url.parse(req.url, true);
+                let queryParams = urlParts.query;    
+                let pathname = urlParts.pathname;
+                let method = req.method;
+            
+                // TODO path params
                 
-                routeCallback(requestData, respondWith);
- 
-            }).on('error', err => {
-                // TODO handle error better
-              console.error(err.stack);  
+                let body = '';
+            
+                req.on('data', (data) => {
+                    body += data;
+                }).on('end', () => {
+                    try {
+                        body = JSON.parse(body); 
+                    } catch (error) {
+                        body = {};
+                    }
+    
+                    let requestData = {
+                        body,
+                        query: queryParams
+                    };
+    
+                    // TODO logic if router path not found
+                    let routeCallback = this.router.route(method, pathname);
+
+                    routeCallback ? routeCallback(requestData, respondWith) : respondWith(404, 'Route not found');
+                }).on('error', err => {
+                    // TODO handle error better
+                  console.error(err.stack);  
+                });
+            
             });
-        
+            
+            
+            this.server.listen(port, host, () => {
+                console.log(`Running on http://${host}:${port}`); // eslint-disable-line no-console
+                resolve();            
+            });
+    
         });
-        
-        
-        server.listen(port, host, () => {
-            console.log(`Running on http://${host}:${port}`); // eslint-disable-line no-console
-        });
-        
     }
 }
 

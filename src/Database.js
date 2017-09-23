@@ -21,7 +21,11 @@ class Database {
      * Replaces the current state of the db with the contents from the DATA_FILE.
      */
     load() {
-        this.data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+        try {
+            this.data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+        } catch (error) {
+            this.data = {};
+        }
     }
 
     /**
