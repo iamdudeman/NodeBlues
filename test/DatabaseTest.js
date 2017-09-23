@@ -1,12 +1,12 @@
 const assert = require('assert');
-const DB = require('../src/db');
+const Database = require('../src/Database');
 const fs = require('fs');
 
-describe('db', () => {
+describe('Database', () => {
     let db = null;
 
     beforeEach(() => {
-        db = new DB();
+        db = new Database();
     });
 
     describe('get/set', () => {
@@ -27,7 +27,7 @@ describe('db', () => {
 
     describe('saves and reads from file system', () => {
         afterEach(() => {
-            fs.unlinkSync(DB.DATA_FILE);
+            fs.unlinkSync(Database.DATA_FILE);
         });
         
         it('should save', () => {
@@ -35,13 +35,13 @@ describe('db', () => {
 
             db.save();
 
-            let readData = JSON.parse(fs.readFileSync(DB.DATA_FILE));
+            let readData = JSON.parse(fs.readFileSync(Database.DATA_FILE));
 
             assert.equal(readData.key, 'value');
         });
 
         it('should load', () => {
-            fs.writeFileSync(DB.DATA_FILE, JSON.stringify({key: 'value'}));
+            fs.writeFileSync(Database.DATA_FILE, JSON.stringify({key: 'value'}));
         
             db.load();
 

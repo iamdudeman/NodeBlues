@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-describe('app', () => {
+describe('Server', () => {
     describe('stuff', () => {
         it('1=1', () => {
             assert.equal(1, 1);
