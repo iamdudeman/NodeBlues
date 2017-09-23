@@ -1,0 +1,31 @@
+{
+  "name": "nodeblues",
+  "version": "1.0.0",
+  "description": "An easy to use node server meant for rapid prototyping ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamdudeman/NodeBlues.git"
+  },
+  "keywords": [
+    "node",
+    "server",
+    "prototype",
+    "JavaScript"
+  ],
+  "author": "Tim Solum",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iamdudeman/NodeBlues/issues"
+  },
+  "homepage": "https://github.com/iamdudeman/NodeBlues#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^4.7.2",
+    "mocha": "^3.5.3"
+  }
+}
