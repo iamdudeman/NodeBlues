@@ -1,8 +1,4 @@
-const {
-    Database,
-    Router,
-    Server
-} = require('./index.js');
+const { Database, Router, Server } = require('./index.js');
 
 // Create a database that we can access from our route callbacks
 let database = new Database();

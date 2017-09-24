@@ -1,5 +1,14 @@
 # NodeBlues
-NodeBlues is a node server meant for rapid prototyping. It was named after the Japanese name "Blues" for *Proto*man from the Megaman video game series. It is very light weight and easy to use.
+NodeBlues is a node server targetted at rapid prototyping. It has two main focusses
+1. Make handling request data and sending responses quick and easy
+2. Make persisting data quick and easy
+
+By registering a callback to a route in the Router you will have access to a requestData object that contains the body, query parameters, and the url parameters that were used for the request. You can then send a response by using the "respondWith" function to send a response after you process the request data. 
+
+If you want to persist data you can use a Database instance. You can load data every time your server starts to keep testing data or you can ignore that step and have a fresh testing environment every time the server starts. By calling the save function before a route calls "respondWith" you can save the current state of the database.
+
+
+It was named after the Japanese name "Blues" for *Proto*man from the Megaman video game series. It is very light weight and easy to use.
 
 ---
 
@@ -17,10 +26,28 @@ $ npm start   # Runs example server
 
 ```
 
+# Hello World
+
+```
+const { Router, Server } = require('node-blues');
+
+let router = new Router();
+
+router.get('/', (requestData, respondWith) => {
+    respondWith(200, 'Hello World!');
+});
+
+let server = new Server(router);
+
+// Default host and port set to "localhost:1337"
+server.start();
+
+```
+
 
 # Example Code
 ```
-const {Database, Router, Server} = require('node-blues');
+const  {Database, Router, Server } = require('node-blues');
 
 // Create a database that we can access from our route callbacks
 let database = new Database();
