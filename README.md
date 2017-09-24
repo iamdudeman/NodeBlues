@@ -30,15 +30,13 @@ $ npm start   # Runs example server
 const {Router, Server} = require('node-blues');
 
 let router = new Router();
+let server = new Server(router);
 
 router.get('/', (requestData, respondWith) => {
     respondWith(200, 'Hello World!');
 });
 
-let server = new Server(router);
-
-// Default host and port set to "localhost:1337"
-server.start();
+server.start('localhost', 1337);
 
 ```
 
