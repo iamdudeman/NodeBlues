@@ -12,7 +12,7 @@ If you want to persist data you can use a Database instance. You can load data e
 
 
 # Installation
-TODO
+npm install nodeblues --save-dev
 ---
 
 
@@ -27,7 +27,7 @@ $ npm start   # Runs example server
 # Hello World
 
 ```
-const {Router, Server} = require('node-blues');
+const {Router, Server} = require('nodeblues');
 
 let router = new Router();
 let server = new Server(router);
@@ -43,7 +43,7 @@ server.start('localhost', 1337);
 
 # Example Code
 ```
-const {Database, Router, Server} = require('node-blues');
+const {Database, Router, Server} = require('nodeblues');
 
 // Create a database that we can access from our route callbacks
 let database = new Database();
