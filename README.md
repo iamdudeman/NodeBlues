@@ -8,8 +8,6 @@ By registering a callback to a route in the Router you will have access to a req
 If you want to persist data you can use a Database instance. You can load data every time your server starts to keep testing data or you can ignore that step and have a fresh testing environment every time the server starts. By calling the save function before a route calls "respondWith" you can save the current state of the database.
 
 
-It was named after the Japanese name "Blues" for *Proto*man from the Megaman video game series. It is very light weight and easy to use.
-
 ---
 
 
@@ -29,7 +27,7 @@ $ npm start   # Runs example server
 # Hello World
 
 ```
-const { Router, Server } = require('node-blues');
+const {Router, Server} = require('node-blues');
 
 let router = new Router();
 
@@ -47,7 +45,7 @@ server.start();
 
 # Example Code
 ```
-const  {Database, Router, Server } = require('node-blues');
+const {Database, Router, Server} = require('node-blues');
 
 // Create a database that we can access from our route callbacks
 let database = new Database();
@@ -118,3 +116,6 @@ let respondWith = function respondWith (statusCode = 200, responseData = '', con
     res.end(JSON.stringify(responseData));
 };
 ```
+
+### For Those Curious
+NodeBlues was named after a character from one of my favorite game series Megaman. The character's name in America was Protoman, *prototyping*, but in Japan he was called Blues.
