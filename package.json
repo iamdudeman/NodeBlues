@@ -4,6 +4,7 @@
   "description": "An easy to use node server meant for rapid prototyping ",
   "main": "index.js",
   "scripts": {
+    "docs": "node_modules/jsdoc/jsdoc.js ./src/*.js",
     "start": "node example.js",
     "test": "mocha"
   },
@@ -26,6 +27,7 @@
   "dependencies": {},
   "devDependencies": {
     "eslint": "^4.7.2",
+    "jsdoc": "^3.5.5",
     "mocha": "^3.5.3",
     "request": "^2.82.0"
   }
