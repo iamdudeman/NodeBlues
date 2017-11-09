@@ -94,4 +94,29 @@ describe('Server', () => {
         });
     });
 
+    describe('cookies', () => {
+        it('should be able respond with cookies', done => {
+            router.get('/cookie', (requestData, respondWith) => {
+                requestData.cookieJar.set('test', 'test2');
+                respondWith(200, 'text', 'text/plain');
+            });
+
+            request.get({url: `${baseUrl}/cookie`, json: {test: 'data'}}, (err, response) => {
+                assert.equal(response.headers.cookie, 'test=test2');
+                done();
+            });
+        });
+
+        it('should be able to receive a cookie', done => {
+            router.get('/cookie', (requestData, respondWith) => {
+                respondWith(200, 'text', 'text/plain');
+            });
+
+            request.get({url: `${baseUrl}/cookie`, json: {test: 'data'}, headers: {Cookie: 'test=test2'}}, (err, response) => {
+                assert.equal(response.headers.cookie, 'test=test2');
+                done();
+            });
+        });
+    });
+
 });

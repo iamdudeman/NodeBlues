@@ -3,7 +3,7 @@ NodeBlues is a node server targetted at rapid prototyping. It has two main focus
 1. Make handling request data and sending responses quick and easy
 2. Make persisting data quick and easy
 
-By registering a callback to a route in the Router you will have access to a requestData object that contains the body, query parameters, and the url parameters that were used for the request. You can then send a response by using the "respondWith" function to send a response after you process the request data. 
+By registering a callback to a route in the Router you will have access to a requestData object that contains the body, query parameters, and the url parameters that were used for the request. You can then send a response by using the "respondWith" function to send a response after you process the request data.
 
 If you want to persist data you can use a Database instance. You can load data every time your server starts to keep testing data or you can ignore that step and have a fresh testing environment every time the server starts. By calling the save function before a route calls "respondWith" you can save the current state of the database.
 
@@ -52,7 +52,6 @@ let database = new Database();
 database.load();
 
 
-
 // Define some routes
 let router = new Router();
 
@@ -67,8 +66,11 @@ router.post('/test', (requestData, respondWith) => {
 
     database.set('test', value);
 
-    // NOTE: Only needed if you want ot persist data
+    // NOTE: Only needed if you want to persist data after restarting the server
     database.save();
+
+    // NOTE: Add a cookie if desired
+    requestData.cookieJar.set('testCookie', 'testValue');
 
     respondWith(200);
 });
@@ -86,7 +88,7 @@ const port = 1337;
 let server = new Server(router);
 
 server.start(host, port).then(() => {
-    console.log(`Running on http://${host}:${port}`); // eslint-disable-line no-console    
+    console.log(`Running on http://${host}:${port}`); // eslint-disable-line no-console
 });
 
 ```
@@ -98,6 +100,7 @@ the request.
 
 ```
 requestData.body         // Object/String containing the body from the request
+requestData.cookieJar    // CookieJar object that can be used to "set" cookies for the response
 requestData.pathParams   // Object containing all path parameters
 requestData.queryParams  // Object containing the query params
 ```
@@ -111,6 +114,7 @@ responseData, and/or a contentType header to use.
 let respondWith = function respondWith (statusCode = 200, responseData = '', contentType = 'text/json') {
     res.statusCode = statusCode;
     res.setHeader('Content-Type', contentType);
+    res.setHeader('Cookie', cookieJar.toHeader());
     res.end(JSON.stringify(responseData));
 };
 ```
