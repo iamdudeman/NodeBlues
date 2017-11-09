@@ -7,12 +7,14 @@ By registering a callback to a route in the Router you will have access to a req
 
 If you want to persist data you can use a Database instance. You can load data every time your server starts to keep testing data or you can ignore that step and have a fresh testing environment every time the server starts. By calling the save function before a route calls "respondWith" you can save the current state of the database.
 
-
+Link to [JSDocs](https://iamdudeman.github.io/NodeBlues/ "NodeBlues Docs")
 ---
 
 
 # Installation
-npm install nodeblues --save-dev
+```
+$ npm install nodeblues --save-dev
+```
 ---
 
 
