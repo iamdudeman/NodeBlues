@@ -42,10 +42,12 @@ class Server {
             this.server = http.createServer((req, res) => {
                 let cookieJar = new CookieJar();
                 let respondWith = function respondWith (statusCode = 200, responseData = '', contentType = 'text/json') {
+                    let responseText = typeof responseData === 'string' ? responseData : JSON.stringify(responseData);
+
                     res.statusCode = statusCode;
                     res.setHeader('Content-Type', contentType);
                     res.setHeader('Cookie', cookieJar.toHeader());
-                    res.end(JSON.stringify(responseData));
+                    res.end(responseText);
                 };
 
                 let urlParts = url.parse(req.url, true);

@@ -35,7 +35,7 @@ describe('Server', () => {
 
         request.get(`${baseUrl}/queryParams?test=data`, (err, response) => {
             assert.equal(response.statusCode, 200);
-            assert.equal(response.body, '"data"');
+            assert.equal(response.body, 'data');
             done();
         });
     });
@@ -54,6 +54,18 @@ describe('Server', () => {
         });
     });
 
+    it('should not stringify string response data', done => {
+        router.get('/', (requestData, respondWith) => {
+            respondWith(200, '<script src="/test.js"></script>');
+        });
+
+        request.get(`${baseUrl}/`, (err, response) => {
+            assert.equal(response.statusCode, 200);
+            assert.equal(response.body, '<script src="/test.js"></script>');
+            done();
+        });
+    });
+
     it('should be able to have path params', done => {
         router.get('/pathParams/:id/test', (requestData, respondWith) => {
             let {pathParams} = requestData;
@@ -63,7 +75,7 @@ describe('Server', () => {
 
         request.get(`${baseUrl}/pathParams/2/test`, (err, response) => {
             assert.equal(response.statusCode, 200);
-            assert.equal(response.body, '"2"');
+            assert.equal(response.body, '2');
             done();
         });
     });
@@ -77,7 +89,7 @@ describe('Server', () => {
 
         request.get(`${baseUrl}/pathParams/2/test/something`, (err, response) => {
             assert.equal(response.statusCode, 200);
-            assert.equal(response.body, '"2something"');
+            assert.equal(response.body, '2something');
             done();
         });
     });
