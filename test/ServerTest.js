@@ -106,6 +106,22 @@ describe('Server', () => {
         });
     });
 
+    describe('socket stuff', () => {
+        it('should listen for data HMR true and broadcast', done => {
+            const WebSocket = require('ws');
+            const ws = new WebSocket('ws://localhost:1338');
+            
+            ws.on('open', () => {
+                ws.on('message', data => {
+                    assert.equal(JSON.parse(data).HMR, true);
+                    ws.terminate();
+                    done();
+                });
+                ws.send(JSON.stringify({HMR: true}));
+            });
+        });
+    });
+
     describe('cookies', () => {
         it('should be able respond with cookies', done => {
             router.get('/cookie', (requestData, respondWith) => {

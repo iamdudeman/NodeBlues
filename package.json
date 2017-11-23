@@ -1,12 +1,12 @@
 {
   "name": "nodeblues",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "An easy to use node server meant for rapid prototyping ",
   "main": "index.js",
   "scripts": {
     "docs": "rm -rf ./docs && node_modules/jsdoc/jsdoc.js ./src/*.js README.md && mv ./out ./docs",
     "start": "node example.js",
-    "test": "mocha"
+    "test": "node_modules/mocha/bin/mocha './test/**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -24,11 +24,14 @@
     "url": "https://github.com/iamdudeman/NodeBlues/issues"
   },
   "homepage": "https://github.com/iamdudeman/NodeBlues#readme",
-  "dependencies": {},
+  "dependencies": {
+    "ws": "^3.3.2"
+  },
   "devDependencies": {
     "eslint": "^4.7.2",
     "jsdoc": "^3.5.5",
     "mocha": "^3.5.3",
-    "request": "^2.82.0"
+    "request": "^2.82.0",
+    "webpack-shell-plugin": "^0.5.0"
   }
 }

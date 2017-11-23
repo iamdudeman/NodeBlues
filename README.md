@@ -121,5 +121,26 @@ let respondWith = function respondWith (statusCode = 200, responseData = '', con
 };
 ```
 
+## Hot Module Reloading
+NodeBlues makes hot module reloading with Webpack a breeze! Import WebpackHMRPlugin and include it in your webpack config.
+
+```
+const WebpackHMRPlugin = require('nodeblues').WebpackHMRPlugin;
+
+{
+    plugins: [
+        new WebpackHMRPlugin('localhost', 1337)
+    ]
+}
+```
+Then you just need to include the enableHMR method from NodeBlues into your browser code and you're all set!
+
+```
+// Likely index.js
+import enableHMR from 'nodeblues';
+
+enableHMR('localhost', 1337);
+```
+
 ### For Those Curious
 NodeBlues was named after a character from one of my favorite game series Megaman. The character's name in America was Protoman, *prototyping*, but in Japan he was called Blues.

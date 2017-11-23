@@ -25,6 +25,7 @@ class Server {
     stop() {
         return new Promise((resolve) => {
             this.server.close().on('close', () => {
+                this.wss.close();                
                 resolve();
             });
         });
@@ -81,11 +82,24 @@ class Server {
                 });
             });
 
+            const WebSocket = require('ws');
+
+            this.wss = new WebSocket.Server({ port: port + 1, host });
+            this.wss.on('connection', ws => {
+                ws.on('message', (data) => {
+                    if (JSON.parse(data).HMR) {
+                        this.wss.clients.forEach(client => {
+                            if (client.readyState === WebSocket.OPEN) {
+                                client.send(data);
+                            }
+                        });
+                    }
+                });
+            });
 
             this.server.listen(port, host, () => {
                 resolve();
             });
-
         });
     }
 }
