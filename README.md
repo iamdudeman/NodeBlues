@@ -137,7 +137,7 @@ Then you just need to include the enableHMR method from NodeBlues into your brow
 
 ```
 // Likely index.js
-import enableHMR from 'nodeblues/browser';
+import { enableHMR } from 'nodeblues/browser';
 
 enableHMR('localhost', 1338);
 ```
