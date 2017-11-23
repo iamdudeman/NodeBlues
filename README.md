@@ -122,14 +122,14 @@ let respondWith = function respondWith (statusCode = 200, responseData = '', con
 ```
 
 ## Hot Module Reloading
-NodeBlues makes hot module reloading with Webpack a breeze! Import WebpackHMRPlugin and include it in your webpack config.
+NodeBlues makes hot module reloading with Webpack a breeze! Import WebpackHMRPlugin and include it in your webpack config. The port for hot module reloading will be 1 above what you set the server as. By default uses port 1337 so you will want to use 1338 for HMR.
 
 ```
-const WebpackHMRPlugin = require('nodeblues').WebpackHMRPlugin;
+const WebpackHMRPlugin = require('nodeblues/webpack').WebpackHMRPlugin;
 
 {
     plugins: [
-        new WebpackHMRPlugin('localhost', 1337)
+        new WebpackHMRPlugin('localhost', 1338)
     ]
 }
 ```
@@ -137,9 +137,9 @@ Then you just need to include the enableHMR method from NodeBlues into your brow
 
 ```
 // Likely index.js
-import enableHMR from 'nodeblues';
+import enableHMR from 'nodeblues/browser';
 
-enableHMR('localhost', 1337);
+enableHMR('localhost', 1338);
 ```
 
 ### For Those Curious
