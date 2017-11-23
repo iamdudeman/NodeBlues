@@ -1,6 +1,6 @@
 {
   "name": "nodeblues",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "An easy to use node server meant for rapid prototyping ",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/iamdudeman/NodeBlues#readme",
   "dependencies": {
-    "webpack-shell-plugin": "^0.5.0",    
+    "on-build-webpack": "^0.1.0",
     "ws": "^3.3.2"
   },
   "devDependencies": {
