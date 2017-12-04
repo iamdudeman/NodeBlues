@@ -37,7 +37,7 @@ class Database {
 
     /**
      * Returns a value from the db.
-     * 
+     *
      * @param {String} key - The key for the desired value
      * @return {*} The value that was stored on the key
      */
@@ -47,7 +47,7 @@ class Database {
 
     /**
      * Sets a value for a key in the db.
-     * 
+     *
      * @param {String} key - The key to store to
      * @param {*} value - The value to store
      */

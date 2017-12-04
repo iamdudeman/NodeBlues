@@ -19,7 +19,7 @@ class Router {
 
     /**
      * Returns the callback for the route defined by the method and path.
-     * 
+     *
      * @param {string} method - The http method used (GET, POST, etc)
      * @param {string} path - The path being called
      * @return {function} The function registered for the desired route
@@ -30,7 +30,7 @@ class Router {
         let methodPath = Object.keys(methodRoutes).filter(routePath => {
             let pathParamValuesRegEx = new RegExp('^' + routePath.replace(PATH_PARAM_KEY_PATTERN, PATH_PARAM_VALUE_PATTERN) + '$');
             let doesMatch = pathParamValuesRegEx.test(path);
-            
+
             if (doesMatch) {
                 let pathParamKeys = [];
                 let match;
@@ -64,7 +64,7 @@ class Router {
      * Callback with receive params (requestData, respondWith)
      * requestData is an object with various request data like "body"
      * respondWith is a function that takes (statusCode = 200, responseData = '', contentType = 'text/json')
-     * 
+     *
      * @param {string} path - The path
      * @param {function} callback - The callback
      */
@@ -77,12 +77,12 @@ class Router {
      * Callback with receive params (requestData, respondWith)
      * requestData is an object with various request data like "body"
      * respondWith is a function that takes (statusCode = 200, responseData = '', contentType = 'text/json')
-     * 
+     *
      * @param {string} path - The path
      * @param {function} callback - The callback
      */
     post(path, callback) {
-        this.routes.post[path] = callback;        
+        this.routes.post[path] = callback;
     }
 
     /**
@@ -90,12 +90,12 @@ class Router {
      * Callback with receive params (requestData, respondWith)
      * requestData is an object with various request data like "body"
      * respondWith is a function that takes (statusCode = 200, responseData = '', contentType = 'text/json')
-     * 
+     *
      * @param {string} path - The path
      * @param {function} callback - The callback
      */
     put(path, callback) {
-        this.routes.put[path] = callback;        
+        this.routes.put[path] = callback;
     }
 
     /**
@@ -103,12 +103,12 @@ class Router {
      * Callback with receive params (requestData, respondWith)
      * requestData is an object with various request data like "body"
      * respondWith is a function that takes (statusCode = 200, responseData = '', contentType = 'text/json')
-     * 
+     *
      * @param {string} path - The path
      * @param {function} callback - The callback
      */
     delete(path, callback) {
-        this.routes.delete[path] = callback;        
+        this.routes.delete[path] = callback;
     }
 }
 

@@ -122,25 +122,32 @@ let respondWith = function respondWith (statusCode = 200, responseData = '', con
 ```
 
 ## Hot Module Reloading
-NodeBlues makes hot module reloading with Webpack a breeze! Import WebpackHMRPlugin and include it in your webpack config. The port for hot module reloading will be 1 above what you set the server as. By default uses port 1337 so you will want to use 1338 for HMR.
+NodeBlues makes hot module reloading with Webpack a breeze! Import WebpackHMRPlugin and include it in your webpack config. The port for hot module reloading will be 1 above what you set the server as. By default uses port 1337 so you will want to use 1338 for HMR. Then add in the hmr-loader and point it to one of your files (typically your entry point file) with the host and port defined as query parameters. Then you're all set! No changes to any source code needed! Then you can easily remove HMR from your production build using your webpack config file!
+
+NOTE: The 'hmr-loader' should be run before any other loaders to ensure it functions properly.
 
 ```
 const WebpackHMRPlugin = require('nodeblues/webpack').WebpackHMRPlugin;
 
 {
+    module: {
+        loaders: [
+            {
+                test: ENTRY_FILE, // Path to your one entry file so it's only added once
+                loader: 'nodeblues/hmr-loader',
+                query: {
+                    host: 'localhost',
+                    port: 1338
+                }
+            }
+        ]
+    },
     plugins: [
         new WebpackHMRPlugin('localhost', 1338)
     ]
 }
 ```
-Then you just need to include the enableHMR method from NodeBlues into your browser code and you're all set!
 
-```
-// Likely index.js
-import { enableHMR } from 'nodeblues/browser';
-
-enableHMR('localhost', 1338);
-```
 
 ### For Those Curious
 NodeBlues was named after a character from one of my favorite game series Megaman. The character's name in America was Protoman, *prototyping*, but in Japan he was called Blues.

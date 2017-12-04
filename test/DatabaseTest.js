@@ -33,7 +33,7 @@ describe('Database', () => {
                 // Nothing to do here
             }
         });
-        
+
         it('should save', () => {
             db.data.key = 'value';
 
@@ -46,7 +46,7 @@ describe('Database', () => {
 
         it('should load', () => {
             fs.writeFileSync(Database.DATA_FILE, JSON.stringify({key: 'value'}));
-        
+
             db.load();
 
             assert.equal(db.data.key, 'value');

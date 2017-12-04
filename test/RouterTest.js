@@ -11,11 +11,11 @@ describe('Router', () => {
     describe('routing', () => {
         it('should be able to route a registered route', () => {
             let cb = () => {};
-    
+
             router.routes.get['/test'] = cb;
-            
+
             let routeCallback = router.route('GET', '/test').callback;
-    
+
             assert.equal(routeCallback, cb);
         });
 
@@ -47,11 +47,11 @@ describe('Router', () => {
             let pathParams = router.route('GET', '/test/12/rawr/heya').pathParams;
 
             assert.equal(pathParams.id, 12);
-            assert.equal(pathParams.mytest, 'heya');            
+            assert.equal(pathParams.mytest, 'heya');
         });
     });
 
-    
+
 
     it('should be able to register get routes', () => {
         assertRoute('get', '/test', () => {});
@@ -72,7 +72,7 @@ describe('Router', () => {
 
     function assertRoute(method, route, cb) {
         router[method](route, cb);
-        
+
         assert.equal(router.routes[method][route], cb);
     }
 });

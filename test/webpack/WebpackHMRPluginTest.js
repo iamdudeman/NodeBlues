@@ -14,7 +14,7 @@ describe('WebpackHMRPlugin', () => {
                 done();
             });
         });
-        
+
         plugin.callback();
     });
 });

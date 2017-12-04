@@ -25,7 +25,7 @@ class Server {
     stop() {
         return new Promise((resolve) => {
             this.server.close().on('close', () => {
-                this.wss.close();                
+                this.wss.close();
                 resolve();
             });
         });

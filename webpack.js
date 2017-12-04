@@ -1,3 +1,3 @@
 module.exports = {
-    WebpackHMRPlugin: require('./src/webpack/WebpackHMRPlugin')    
+    WebpackHMRPlugin: require('./src/webpack/WebpackHMRPlugin')
 };

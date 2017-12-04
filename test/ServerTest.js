@@ -110,7 +110,7 @@ describe('Server', () => {
         it('should listen for data HMR true and broadcast', done => {
             const WebSocket = require('ws');
             const ws = new WebSocket('ws://localhost:1338');
-            
+
             ws.on('open', () => {
                 ws.on('message', data => {
                     assert.equal(JSON.parse(data).HMR, true);
