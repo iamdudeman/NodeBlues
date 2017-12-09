@@ -49,6 +49,17 @@ describe('Router', () => {
             assert.equal(pathParams.id, 12);
             assert.equal(pathParams.mytest, 'heya');
         });
+
+        it('should be able to handle pathParams with - and .', () => {
+            let cb = () => {};
+
+            router.routes.get['/test/:id/rawr/:mytest'] = cb;
+
+            let pathParams = router.route('GET', '/test/12-2/rawr/hey.a').pathParams;
+
+            assert.equal(pathParams.id, '12-2');
+            assert.equal(pathParams.mytest, 'hey.a');
+        });
     });
 
 

@@ -1,5 +1,5 @@
-const PATH_PARAM_KEY_PATTERN=/\/:([a-zA-Z0-9]+)/g;
-const PATH_PARAM_VALUE_PATTERN='/([a-zA-Z0-9]*)';
+const PATH_PARAM_KEY_PATTERN=/\/:([a-zA-Z0-9.-]+)/g;
+const PATH_PARAM_VALUE_PATTERN='/([a-zA-Z0-9.-]*)';
 
 /**
  * Router contains all route definitions for the Server to use.
