@@ -63,6 +63,7 @@ router.get('/test', (requestData, respondWith) => {
     respondWith(200, {data});
 });
 
+// Access request body data and save db changes
 router.post('/test', (requestData, respondWith) => {
     let value = requestData.body.test;
 
@@ -77,10 +78,26 @@ router.post('/test', (requestData, respondWith) => {
     respondWith(200);
 });
 
+// Access path params data
 router.get('/test/:id', (requestData, respondWith) => {
     let value = requestData.pathParams.id;
 
     respondWith(200, value);
+});
+
+// Example of returning files
+router.get('/:filename', (requestData, respondWith) => {
+    let pathToFile = requestData.pathParams.filename;
+    let mimeType = pathToFile.endsWith('.js') ? 'application/javascript' : 'text/html';
+
+    // NOTE: need to require in 'fs' dependency here
+    fs.readFile(pathToFile, 'utf8', (err, html) => {
+        if (err) {
+            respondWith(400, `Something bad happened [${err}]`, 'text/plain');
+        } else {
+            respondWith(200, html, mimeType);
+        }
+    });
 });
 
 
@@ -148,6 +165,13 @@ const WebpackHMRPlugin = require('nodeblues/webpack').WebpackHMRPlugin;
 }
 ```
 
+Then when creating your Server instance be sure to pass in a true for the second parameter
+```
+const {Database, Router, Server} = require('nodeblues');
+
+let router = new Router();
+let server = new Server(router, true);
+```
 
 ### For Those Curious
 NodeBlues was named after a character from one of my favorite game series Megaman. The character's name in America was Protoman, *prototyping*, but in Japan he was called Blues.

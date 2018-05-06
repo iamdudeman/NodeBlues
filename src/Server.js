@@ -11,10 +11,13 @@ class Server {
      * Create a Server instance.
      *
      * @param {Router} router - The Router to be used for this Server
+     * @param {boolean} enableAutoRefresh - Whether or not the server listens for an auto refresh event
      */
-    constructor(router) {
+    constructor(router, enableAutoRefresh = false) {
         this.router = router;
         this.server = null;
+
+        this.enableAutoRefresh = enableAutoRefresh;
     }
 
     /**
@@ -25,7 +28,7 @@ class Server {
     stop() {
         return new Promise((resolve) => {
             this.server.close().on('close', () => {
-                this.wss.close();
+                this.wss && this.wss.close();
                 resolve();
             });
         });
@@ -84,18 +87,20 @@ class Server {
 
             const WebSocket = require('ws');
 
-            this.wss = new WebSocket.Server({ port: port + 1, host });
-            this.wss.on('connection', ws => {
-                ws.on('message', (data) => {
-                    if (JSON.parse(data).HMR) {
-                        this.wss.clients.forEach(client => {
-                            if (client.readyState === WebSocket.OPEN) {
-                                client.send(data);
-                            }
-                        });
-                    }
+            if (this.enableAutoRefresh) {
+                this.wss = new WebSocket.Server({ port: port + 1, host });
+                this.wss.on('connection', ws => {
+                    ws.on('message', (data) => {
+                        if (JSON.parse(data).HMR) {
+                            this.wss.clients.forEach(client => {
+                                if (client.readyState === WebSocket.OPEN) {
+                                    client.send(data);
+                                }
+                            });
+                        }
+                    });
                 });
-            });
+            }
 
             this.server.listen(port, host, () => {
                 resolve();
