@@ -175,3 +175,8 @@ let server = new Server(router, true);
 
 ### For Those Curious
 NodeBlues was named after a character from one of my favorite game series Megaman. The character's name in America was Protoman, *prototyping*, but in Japan he was called Blues.
+
+
+
+# TODO List
+1. Add an easy tool for testing api routes
