@@ -11,13 +11,10 @@ class Server {
      * Create a Server instance.
      *
      * @param {Router} router - The Router to be used for this Server
-     * @param {boolean} enableAutoRefresh - Whether or not the server listens for an auto refresh event
      */
-    constructor(router, enableAutoRefresh = false) {
+    constructor(router) {
         this.router = router;
         this.server = null;
-
-        this.enableAutoRefresh = enableAutoRefresh;
     }
 
     /**
@@ -28,7 +25,6 @@ class Server {
     stop() {
         return new Promise((resolve) => {
             this.server.close().on('close', () => {
-                this.wss && this.wss.close();
                 resolve();
             });
         });
@@ -84,23 +80,6 @@ class Server {
                     console.error(err.stack); // eslint-disable-line no-console
                 });
             });
-
-            const WebSocket = require('ws');
-
-            if (this.enableAutoRefresh) {
-                this.wss = new WebSocket.Server({ port: port + 1, host });
-                this.wss.on('connection', ws => {
-                    ws.on('message', (data) => {
-                        if (JSON.parse(data).HMR) {
-                            this.wss.clients.forEach(client => {
-                                if (client.readyState === WebSocket.OPEN) {
-                                    client.send(data);
-                                }
-                            });
-                        }
-                    });
-                });
-            }
 
             this.server.listen(port, host, () => {
                 resolve();

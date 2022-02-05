@@ -24,10 +24,7 @@
     "url": "https://github.com/iamdudeman/NodeBlues/issues"
   },
   "homepage": "https://github.com/iamdudeman/NodeBlues#readme",
-  "dependencies": {
-    "on-build-webpack": "^0.1.0",
-    "ws": "^3.3.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^8.8.0",
     "jsdoc": "^3.5.5",
