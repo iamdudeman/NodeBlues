@@ -38,7 +38,6 @@ class Router {
                     pathParamKeys.push(match[1]);
                 }
 
-                // I'm not sure why the values regex doesn't need the loop but the keys do
                 let pathParamValues = pathParamValuesRegEx.exec(path);
 
                 if (pathParamKeys) {

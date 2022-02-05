@@ -30,9 +30,7 @@ describe('Router', () => {
         });
 
         it('should not route if incorrect path', () => {
-            let cb = () => {};
-
-            router.routes.get['/test/:id/rawr/:mytest'] = cb;
+            router.routes.get['/test/:id/rawr/:mytest'] = () => {};
 
             let routeCallback = router.route('GET', '/test/12/wrong/heya').callback;
 
@@ -40,9 +38,7 @@ describe('Router', () => {
         });
 
         it('should return pathParams if there are any', () => {
-            let cb = () => {};
-
-            router.routes.get['/test/:id/rawr/:mytest'] = cb;
+            router.routes.get['/test/:id/rawr/:mytest'] = () => {};
 
             let pathParams = router.route('GET', '/test/12/rawr/heya').pathParams;
 
@@ -51,9 +47,7 @@ describe('Router', () => {
         });
 
         it('should be able to handle pathParams with - and .', () => {
-            let cb = () => {};
-
-            router.routes.get['/test/:id/rawr/:mytest'] = cb;
+            router.routes.get['/test/:id/rawr/:mytest'] = () => {};
 
             let pathParams = router.route('GET', '/test/12-2/rawr/hey.a').pathParams;
 

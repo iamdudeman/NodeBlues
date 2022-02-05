@@ -1,11 +1,11 @@
 # NodeBlues
-NodeBlues is a node server targetted at rapid prototyping. It has two main focusses
+NodeBlues is a node server targeted at rapid prototyping. It has two main focuses
 1. Make handling request data and sending responses quick and easy
 2. Make persisting data quick and easy
 
 By registering a callback to a route in the Router you will have access to a requestData object that contains the body, query parameters, and the url parameters that were used for the request. You can then send a response by using the "respondWith" function to send a response after you process the request data.
 
-If you want to persist data you can use a Database instance. You can load data every time your server starts to keep testing data or you can ignore that step and have a fresh testing environment every time the server starts. By calling the save function before a route calls "respondWith" you can save the current state of the database.
+If you want to persist data you can use a Database instance. You can load data every time your server starts to keep testing data, or you can ignore that step and have a fresh testing environment every time the server starts. By calling the save function before a route calls "respondWith" you can save the current state of the database.
 
 Link to [JSDocs](https://iamdudeman.github.io/NodeBlues/ "NodeBlues Docs")
 ---
@@ -136,41 +136,6 @@ let respondWith = function respondWith (statusCode = 200, responseData = '', con
     res.setHeader('Cookie', cookieJar.toHeader());
     res.end(JSON.stringify(responseData));
 };
-```
-
-## Hot Module Reloading
-NodeBlues makes hot module reloading with Webpack a breeze! Import WebpackHMRPlugin and include it in your webpack config. The port for hot module reloading will be 1 above what you set the server as. By default uses port 1337 so you will want to use 1338 for HMR. Then add in the hmr-loader and point it to one of your files (typically your entry point file) with the host and port defined as query parameters. Then you're all set! No changes to any source code needed! Then you can easily remove HMR from your production build using your webpack config file!
-
-NOTE: The 'hmr-loader' should be run before any other loaders to ensure it functions properly.
-
-```
-const WebpackHMRPlugin = require('nodeblues/webpack').WebpackHMRPlugin;
-
-{
-    module: {
-        loaders: [
-            {
-                test: ENTRY_FILE, // Path to your one entry file so it's only added once
-                loader: 'nodeblues/hmr-loader',
-                query: {
-                    host: 'localhost',
-                    port: 1338
-                }
-            }
-        ]
-    },
-    plugins: [
-        new WebpackHMRPlugin('localhost', 1338)
-    ]
-}
-```
-
-Then when creating your Server instance be sure to pass in a true for the second parameter
-```
-const {Database, Router, Server} = require('nodeblues');
-
-let router = new Router();
-let server = new Server(router, true);
 ```
 
 ### For Those Curious
