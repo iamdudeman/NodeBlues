@@ -1,10 +1,10 @@
 {
   "name": "nodeblues",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "An easy to use node server meant for rapid prototyping ",
   "main": "index.js",
   "scripts": {
-    "docs": "rm -rf ./docs && node_modules/jsdoc/jsdoc.js ./src/*.js README.md && mv ./out ./docs",
+    "docs": "npx jsdoc ./src/CookieJar.js ./src/Database.js ./src/Router.js ./src/Server.js README.md -d ./docs",
     "start": "node example.js",
     "test": "npx mocha './test/**/*.js'"
   },

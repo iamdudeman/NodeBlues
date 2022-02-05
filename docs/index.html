@@ -43,18 +43,27 @@
 
 
     <section>
-        <article><h1>NodeBlues</h1><p>NodeBlues is a node server targetted at rapid prototyping. It has two main focusses</p>
+        <article><h1>NodeBlues</h1>
+<p>NodeBlues is a node server targeted at rapid prototyping. It has two main focuses</p>
 <ol>
 <li>Make handling request data and sending responses quick and easy</li>
 <li>Make persisting data quick and easy</li>
 </ol>
 <p>By registering a callback to a route in the Router you will have access to a requestData object that contains the body, query parameters, and the url parameters that were used for the request. You can then send a response by using the &quot;respondWith&quot; function to send a response after you process the request data.</p>
-<p>If you want to persist data you can use a Database instance. You can load data every time your server starts to keep testing data or you can ignore that step and have a fresh testing environment every time the server starts. By calling the save function before a route calls &quot;respondWith&quot; you can save the current state of the database.</p>
-<h2>Link to <a href="https://iamdudeman.github.io/NodeBlues/" title="NodeBlues Docs">JSDocs</a></h2><h1>Installation</h1><pre class="prettyprint source"><code>$ npm install nodeblues --save-dev</code></pre><hr>
-<h1>Run Example Code or Tests</h1><pre class="prettyprint source"><code>$ npm install # Must be run before running tests
+<p>If you want to persist data you can use a Database instance. You can load data every time your server starts to keep testing data, or you can ignore that step and have a fresh testing environment every time the server starts. By calling the save function before a route calls &quot;respondWith&quot; you can save the current state of the database.</p>
+<h2>Link to <a href="https://iamdudeman.github.io/NodeBlues/" title="NodeBlues Docs">JSDocs</a></h2>
+<h1>Installation</h1>
+<pre class="prettyprint source"><code>$ npm install nodeblues --save-dev
+</code></pre>
+<hr>
+<h1>Run Example Code or Tests</h1>
+<pre class="prettyprint source"><code>$ npm install # Must be run before running tests
 $ npm test    # Runs all tests
 $ npm start   # Runs example server
-</code></pre><h1>Hello World</h1><pre class="prettyprint source"><code>const {Router, Server} = require('nodeblues');
+
+</code></pre>
+<h1>Hello World</h1>
+<pre class="prettyprint source"><code>const {Router, Server} = require('nodeblues');
 
 let router = new Router();
 let server = new Server(router);
@@ -64,7 +73,10 @@ router.get('/', (requestData, respondWith) => {
 });
 
 server.start('localhost', 1337);
-</code></pre><h1>Example Code</h1><pre class="prettyprint source"><code>const {Database, Router, Server} = require('nodeblues');
+
+</code></pre>
+<h1>Example Code</h1>
+<pre class="prettyprint source"><code>const {Database, Router, Server} = require('nodeblues');
 
 // Create a database that we can access from our route callbacks
 let database = new Database();
@@ -128,43 +140,32 @@ let server = new Server(router);
 server.start(host, port).then(() => {
     console.log(`Running on http://${host}:${port}`); // eslint-disable-line no-console
 });
-</code></pre><h2>requestData</h2><p>This object is passed into the route callbacks and contains the body, pathParams, and queryParams from
+
+</code></pre>
+<h2>requestData</h2>
+<p>This object is passed into the route callbacks and contains the body, pathParams, and queryParams from
 the request.</p>
 <pre class="prettyprint source"><code>requestData.body         // Object/String containing the body from the request
 requestData.cookieJar    // CookieJar object that can be used to &quot;set&quot; cookies for the response
 requestData.pathParams   // Object containing all path parameters
-requestData.queryParams  // Object containing the query params</code></pre><h2>respondWith</h2><p>This function is passed into the route callbacks and is used to fire off a response. You can pass in a statusCode,
+requestData.queryParams  // Object containing the query params
+</code></pre>
+<h2>respondWith</h2>
+<p>This function is passed into the route callbacks and is used to fire off a response. You can pass in a statusCode,
 responseData, and/or a contentType header to use.</p>
 <pre class="prettyprint source"><code>let respondWith = function respondWith (statusCode = 200, responseData = '', contentType = 'text/json') {
     res.statusCode = statusCode;
     res.setHeader('Content-Type', contentType);
     res.setHeader('Cookie', cookieJar.toHeader());
     res.end(JSON.stringify(responseData));
-};</code></pre><h2>Hot Module Reloading</h2><p>NodeBlues makes hot module reloading with Webpack a breeze! Import WebpackHMRPlugin and include it in your webpack config. The port for hot module reloading will be 1 above what you set the server as. By default uses port 1337 so you will want to use 1338 for HMR. Then add in the hmr-loader and point it to one of your files (typically your entry point file) with the host and port defined as query parameters. Then you're all set! No changes to any source code needed! Then you can easily remove HMR from your production build using your webpack config file!</p>
-<p>NOTE: The 'hmr-loader' should be run before any other loaders to ensure it functions properly.</p>
-<pre class="prettyprint source"><code>const WebpackHMRPlugin = require('nodeblues/webpack').WebpackHMRPlugin;
-
-{
-    module: {
-        loaders: [
-            {
-                test: ENTRY_FILE, // Path to your one entry file so it's only added once
-                loader: 'nodeblues/hmr-loader',
-                query: {
-                    host: 'localhost',
-                    port: 1338
-                }
-            }
-        ]
-    },
-    plugins: [
-        new WebpackHMRPlugin('localhost', 1338)
-    ]
-}</code></pre><p>Then when creating your Server instance be sure to pass in a true for the second parameter</p>
-<pre class="prettyprint source"><code>const {Database, Router, Server} = require('nodeblues');
-
-let router = new Router();
-let server = new Server(router, true);</code></pre><h3>For Those Curious</h3><p>NodeBlues was named after a character from one of my favorite game series Megaman. The character's name in America was Protoman, <em>prototyping</em>, but in Japan he was called Blues.</p></article>
+};
+</code></pre>
+<h3>For Those Curious</h3>
+<p>NodeBlues was named after a character from one of my favorite game series Megaman. The character's name in America was Protoman, <em>prototyping</em>, but in Japan he was called Blues.</p>
+<h1>TODO List</h1>
+<ol>
+<li>Add an easy tool for testing api routes</li>
+</ol></article>
     </section>
 
 
@@ -181,7 +182,7 @@ let server = new Server(router, true);</code></pre><h3>For Those Curious</h3><p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat May 05 2018 20:42:04 GMT-0500 (DST)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Sat Feb 05 2022 09:43:18 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
