@@ -1,11 +1,11 @@
 # NodeBlues
-NodeBlues is a node server targetted at rapid prototyping. It has two main focusses
+NodeBlues is a node server targeted at rapid prototyping. It has two main focuses
 1. Make handling request data and sending responses quick and easy
 2. Make persisting data quick and easy
 
 By registering a callback to a route in the Router you will have access to a requestData object that contains the body, query parameters, and the url parameters that were used for the request. You can then send a response by using the "respondWith" function to send a response after you process the request data.
 
-If you want to persist data you can use a Database instance. You can load data every time your server starts to keep testing data or you can ignore that step and have a fresh testing environment every time the server starts. By calling the save function before a route calls "respondWith" you can save the current state of the database.
+If you want to persist data you can use a Database instance. You can load data every time your server starts to keep testing data, or you can ignore that step and have a fresh testing environment every time the server starts. By calling the save function before a route calls "respondWith" you can save the current state of the database.
 
 Link to [JSDocs](https://iamdudeman.github.io/NodeBlues/ "NodeBlues Docs")
 ---
